@@ -1,0 +1,129 @@
+ScreenManager:
+
+    MainScreen:
+    InfoScreen:
+    SaveNewScreen:
+    AboutScreen:
+#:import Window kivy.core.window.Window
+<MainScreen>:
+    name:'main_s'
+    MDBoxLayout: 
+        orientation:'vertical' 
+        MDToolbar: 
+            title:'PassVaulter'
+            elevation:10
+            right_action_items: [["information",lambda x: app.goto_about_s()]]
+        ScrollView:
+            pos_hint: {'center_y': .5, 'center_x': .5}
+            size_hint: .9, .8
+            MDList:
+                id: contentlist
+    MDFloatingActionButton:
+        icon:"plus-thick"
+        elevation_normal: 8
+        x: Window.width - self.width - dp(10)
+        y: dp(10)
+        on_press: root.manager.current = 'save_new_s'  
+
+<InfoScreen>:
+    name:'info_s'
+    MDBoxLayout:
+        orientation: 'vertical'
+        pos_hint: {"y": .9}
+        MDToolbar:
+            title:'Info'
+            elevation: 10
+            icon:"arrow-left"
+            left_action_items: [["arrow-left", lambda x: app.backtomain_s()]]
+    MDFloatLayout:
+        MDLabel:
+            id: plat_nme_l
+            pos_hint: {"center_x": .5,"center_y": .7}
+            size_hint_x: .8
+        MDLabel:
+            id: email_l
+            pos_hint: {"center_x": .5,"center_y": .58}
+            size_hint_x: .8
+        MDLabel:
+            id: pass_l
+            pos_hint: {"center_x": .5,"center_y": .48}
+            size_hint_x: .8
+        MDRaisedButton:
+            text:"Delete"
+            on_press: app.delete_pass()
+            pos_hint: {"center_x": .5,"center_y": .3}
+            size_hint: .8, None
+            
+        
+        
+<SaveNewScreen>:
+    name:"save_new_s"
+    MDBoxLayout:
+        orientation: 'vertical'
+        pos_hint: {"y": .9}
+        MDToolbar:
+            title:'Save New Password'
+            elevation: 10
+            icon:"arrow-left"
+            left_action_items: [["arrow-left", lambda x: app.backtomain_s()]]
+    MDFloatLayout:
+        MDTextField:
+            id: plat_nme
+            hint_text:"Platform Name"
+            pos_hint: {"center_x": .5,"center_y": .7}
+            size_hint_x: .8
+            required: True
+            icon_right: "web"
+        MDTextField:
+            id: email
+            hint_text:"Username/Email"
+            pos_hint: {"center_x": .5,"center_y": .58}
+            size_hint_x: .8
+            required: True
+            icon_right: "email"
+        MDTextField:
+            id: password1
+            hint_text: "Password"
+            pos_hint: {"center_x": .5,"center_y": .48}
+            size_hint_x: .8
+            password: True
+            required: True
+            icon_right: "eye"
+        MDRaisedButton:
+            text:"Save"
+            pos_hint: {"center_x": .5,"center_y": .3}
+            size_hint: .8, None
+            on_press: app.save_new_pass()
+
+<AboutScreen>:
+    name:"about_s"
+    MDBoxLayout:
+        orientation: 'vertical'
+        pos_hint: {"y": .9}
+        MDToolbar:
+            title:'About PassVaulter'
+            elevation: 10
+            icon:"arrow-left"
+            left_action_items: [["arrow-left", lambda x: app.backtomain_s()]]
+    MDFloatLayout:
+        MDLabel: 
+            text:'About PassVaulter'
+            font_style: "H5"
+            halign: "center"
+            pos_hint: {"center_x": .5,"center_y": .8}
+            size_hint_x: .6
+        MDLabel:
+            text:'PassVaulter is a gui based password manager. It saves the password in encrypt form.'
+            pos_hint: {"center_x": .5,"center_y": .63}
+            size_hint_x: .6
+        MDLabel:
+            text:'PassVaulter is developed by Raunak Raj'
+            pos_hint: {"center_x": .5,"center_y": .4}
+            size_hint_x: .6
+            bold: True
+
+<ListItem>:
+    id: the_list_item
+    markup: True
+    word_wrap:True
+    on_release: app.goto_info(the_list_item)
